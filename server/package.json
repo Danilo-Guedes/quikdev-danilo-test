@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "quikdev test for fullstack dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danilo-Guedes/quikdev-danilo-test.git"
+  },
+  "author": "Danilo Guedes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Danilo-Guedes/quikdev-danilo-test/issues"
+  },
+  "homepage": "https://github.com/Danilo-Guedes/quikdev-danilo-test#readme"
+}
