@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
@@ -12,14 +12,6 @@ function Home() {
     alert(`email: ${email} \n password: ${password} \n`);
   }
 
-  useEffect(() => {
-    const getData = async () => {
-      const resp = await fetch("http://localhost:3000/api/user/hello2");
-      const data = await resp.json();
-      console.log(data);
-    };
-    getData()
-  }, []);
   return (
     <div className="h-full  p-5 m-2 flex items-center justify-center ">
       <section className="flex flex-col items-center container">
