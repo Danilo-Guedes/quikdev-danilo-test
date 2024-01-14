@@ -1,17 +1,35 @@
 import { useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../utils/routes";
+import { useMutation } from "@tanstack/react-query";
 
-function Home() {
+import { ROUTES } from "../../utils/routes";
+import { createUser } from "../../api/user";
+
+function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  function handleLoginSubmit(e) {
+  const mutation = useMutation({
+    mutationFn: createUser,
+    onSuccess: (data) => {
+      // On success, you can do anything with the returned data
+      console.log("User created successfully", data);
+    },
+    onError: (error) => {
+      // On error, you can do anything with the error object
+      console.log("Error creating user", error);
+    },
+  });
+
+  async function handleSingUp(e) {
     e.preventDefault();
-    alert(`nome : ${name} \n email: ${email} \n password: ${password} \n confirmPassword: ${confirmPassword}`);
+
+    const user = { name, email, password, confirmPassword };
+
+    mutation.mutate(user);
   }
   return (
     <div className="h-full  p-5 m-2 flex items-center justify-center ">
@@ -115,10 +133,10 @@ function Home() {
                     />
                   </div>
                   <button
-                    onClick={handleLoginSubmit}
+                    onClick={handleSingUp}
                     className="bg-red-500 text-white rounded-lg p-2 mt-5"
                   >
-                    Entrar
+                    Cadastrar
                   </button>
                 </div>
               </form>
@@ -136,4 +154,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SignUp;

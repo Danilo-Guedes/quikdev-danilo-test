@@ -1,11 +1,19 @@
 const express = require("express");
 const cors = require("cors");
+
+const userRouter = require("./routes/user");
+
 const app = express();
 
-//middlewares
-
+//MIDDLEWARES
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+//ROUTES
+app.use("/api/user", userRouter);
+
+//DB INSTANCE
 const db = require("./services/database/sqlite");
 
 app.listen(3000, () => {
