@@ -17,5 +17,20 @@ const createTable = (db) => {
   });
 };
 
+const insertUserIntoDb = async (db, user) => {
+  const insertUserIntoDbQuery = `
+    INSERT INTO User (name, email) VALUES (?, ?)
+  `;
+
+  db.run(insertUserIntoDbQuery, [user.name, user.email], (err) => {
+    if (err) {
+      console.error("Error creating user:", err.message);
+      throw err;
+    } else {
+      console.log("User created successfully.");
+    }
+  });
+};
+
 // Export the User model
-module.exports = { createTable };
+module.exports = { createTable, insertUserIntoDb };
