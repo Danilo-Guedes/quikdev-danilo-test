@@ -1,25 +1,48 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 import { ROUTES } from "../../utils/routes";
 import { userLogin } from "../../api/auth";
+import { useToast } from "../../components/ui/use-toast";
 
 function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
+  const { toast } = useToast();
 
   const mutation = useMutation({
     mutationFn: userLogin,
     onSuccess: (data) => {
+      console.log("data: ", data);
       // On success, you can do anything with the returned data
-      console.log("User created successfully", data);
+      console.log("User loged in successfully");
+
+      localStorage.setItem("user-token", data.token);
+      localStorage.setItem("user-data", JSON.stringify(data.user));
+      toast({
+        title: "Usuário Logado",
+        description: `Bem vindo ao Teste QuikDev, ${data.user.name}`,
+      });
+
+      navigate(ROUTES.posts);
     },
     onError: (error) => {
       // On error, you can do anything with the error object
-      console.log("Error when tried to login the user", error);
+      console.log("Error when tried to login the user");
+      console.error(error);
+
+      toast({
+        title: "Opss...",
+        description: "Erro ao tentar logar, verifique os dados informados",
+        variant: "destructive",
+      });
+
+      setPassword("");
     },
   });
 
@@ -84,6 +107,7 @@ function Home() {
                   <input
                     className="border rounded-lg p-2 mt-2"
                     type="password"
+                    required
                     placeholder="Digite..."
                     id="passwordinput"
                     value={password}
