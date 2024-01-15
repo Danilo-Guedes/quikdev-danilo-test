@@ -14,6 +14,8 @@ function Home() {
               "Sejam bem vindo ao meu teste para a vaga de fullstack da QuikDev!",
               "Espero que gostem do que vão ver!",
               "Obrigado pela oportunidade!",
+              "Stack do front: Vite, React, Tailwind, React-Query",
+              "Stack do back: Node, Express, Sqlite3",
             ]}
             cursor
             cursorBlinking

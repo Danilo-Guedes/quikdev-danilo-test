@@ -56,7 +56,7 @@ function SignUpForm() {
       <span className="text-2xl text-blue-400 font-bold text-center">
         Preencha para fazer o seu Cadastro
       </span>
-      <Formik
+      <Formik // usando os components react do Formik para mostrar outra abordagem de formulário sem utilizar o hook
         initialValues={{
           name: "",
           email: "",

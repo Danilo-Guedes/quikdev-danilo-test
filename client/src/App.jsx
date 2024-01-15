@@ -3,6 +3,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
+import Posts from "./pages/Posts";
 import { ROUTES } from "./utils/routes";
 import { checkAuth } from "./utils/auth";
 import { Toaster } from "./components/ui/toaster";
@@ -24,7 +25,7 @@ function App() {
     },
     {
       path: ROUTES.posts,
-      element: <h1>postssssss</h1>,
+      element: <Posts />,
       loader: () => checkAuth(),
     },
   ]);
