@@ -1,5 +1,5 @@
 const db = require("../services/database/sqlite");
-const { insertPostIntoDb } = require("../models/post");
+const { insertPostIntoDb, getPostRows } = require("../models/post");
 const { decodeJWT } = require("../services/auth/jwt");
 
 async function handleCreatePost(req, res) {
@@ -37,4 +37,15 @@ console.log({
   }
 }
 
-module.exports = { handleCreatePost };
+async function handleGetPostList(req, res) {
+  try {
+
+    const PostList = await getPostRows(db);
+
+    res.status(200).json(PostList);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+module.exports = { handleCreatePost, handleGetPostList };

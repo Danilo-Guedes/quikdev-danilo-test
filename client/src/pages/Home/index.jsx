@@ -1,8 +1,20 @@
 import { Typewriter } from "react-simple-typewriter";
 import LoginForm from "../../components/shared/LoginForm";
+import { useEffect } from "react";
+import { checkAuth } from "../../utils/auth";
+import { useNavigate } from "react-router";
+import { ROUTES } from "../../utils/routes";
 
 function Home() {
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const hasUserData = checkAuth();
+    console.log({ user: hasUserData });
+    if (hasUserData) {
+      navigate(ROUTES.posts);
+    }
+  }, []);
 
   return (
     <div className="h-full p-2 md:p-5 m-2 flex items-center justify-center ">

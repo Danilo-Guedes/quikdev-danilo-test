@@ -12,3 +12,16 @@ export async function createUser(user) {
     throw error;
   }
 }
+export async function getUserById() {
+  try {
+
+    const resp = await apiClient.get("/user/me", );
+
+    console.log({ resp });
+
+    return resp.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 // Create the User table fn
 const createTable = (db) => {
   const createTableQuery = `
@@ -26,17 +26,21 @@ const insertUserIntoDb = async (db, user) => {
     INSERT INTO User (name, email, hashed_password) VALUES (?, ?, ?)
   `;
 
-  db.run(insertUserIntoDbQuery, [user.name, user.email, hashedPassword], (err) => {
-    if (err) {
-      console.error("Error creating user:", err.message);
-      throw err;
-    } else {
-      console.log("User created successfully.");
+  db.run(
+    insertUserIntoDbQuery,
+    [user.name, user.email, hashedPassword],
+    (err) => {
+      if (err) {
+        console.error("Error creating user:", err.message);
+        throw err;
+      } else {
+        console.log("User created successfully.");
+      }
     }
-  });
+  );
 };
 
-const getUserRow = (db, user) => {
+const getUserRowByEmail = (db, user) => {
   const getUserRowQuery = `
     SELECT * FROM User WHERE email = ?
   `;
@@ -52,5 +56,29 @@ const getUserRow = (db, user) => {
   });
 };
 
+const getUserRowById = (db, user) => {
+  console.log({ userNoModels: user });
+  const getUserRowQuery = `
+    SELECT * FROM User WHERE id = ?
+  `;
+
+  return new Promise((resolve, reject) => {
+    db.get(getUserRowQuery, [user.id], (err, row) => {
+      
+      if (err) {
+        reject(err);
+      } else {
+        delete row.hashed_password;
+        resolve(row);
+      }
+    });
+  });
+};
+
 // Export the User model
-module.exports = { createTable, insertUserIntoDb, getUserRow };
+module.exports = {
+  createTable,
+  insertUserIntoDb,
+  getUserRowByEmail,
+  getUserRowById,
+};

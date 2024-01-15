@@ -2,7 +2,7 @@ import apiClient from ".";
 
 export async function fetchPosts() {
   try {
-    const resp = await apiClient.get("/posts/create");
+    const resp = await apiClient.get("/posts/list");
 
     console.log({ resp });
 

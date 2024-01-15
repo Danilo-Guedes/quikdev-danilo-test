@@ -4,9 +4,9 @@ const createTable = (db) => {
   const createTableQuery = `
         CREATE TABLE IF NOT EXISTS Post (
             id INTEGER PRIMARY KEY,
-            user_id INTEGER,
-            title VARCHAR(100),
-            description TEXT,
+            user_id INTEGER NOT NULL,
+            title VARCHAR(100) NOT NULL,
+            description TEXT NOT NULL,
             file_path VARCHAR(200),
             FOREIGN KEY (user_id) REFERENCES User(id)
         );
@@ -27,8 +27,6 @@ const insertPostIntoDb = (db, values) => {
         VALUES (?, ?, ?, ?);
     `;
 
-  console.log("values antes do Db", values);
-
   const { title, description, userId, filePath } = values;
 
   return new Promise((resolve, reject) => {
@@ -44,4 +42,41 @@ const insertPostIntoDb = (db, values) => {
   });
 };
 
-module.exports = { createTable, insertPostIntoDb };
+const getPostRows = async (db) => {
+  const getPostQuery = `
+  SELECT Post.*, User.name, User.email
+  FROM Post
+  INNER JOIN User ON Post.user_id = User.id
+  ORDER BY Post.id DESC;
+`;
+
+  return new Promise((resolve, reject) => {
+    db.all(getPostQuery, (err, rows) => {
+      if (err) {
+        console.error("Error getting posts listing:", err.message);
+        reject(err);
+      } else {
+        console.log("Posts retrieved successfully.");
+
+        const posts = rows.map((row) => {
+          const user = {
+            name: row.name,
+            email: row.email,
+          };
+
+          delete row.name;
+          delete row.email;
+
+          return {
+            ...row,
+            user,
+          };
+        });
+
+        resolve(posts);
+      }
+    });
+  });
+};
+
+module.exports = { createTable, insertPostIntoDb, getPostRows };

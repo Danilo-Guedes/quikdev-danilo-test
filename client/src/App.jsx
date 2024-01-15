@@ -7,6 +7,7 @@ import Posts from "./pages/Posts";
 import { ROUTES } from "./utils/routes";
 import { checkAuth } from "./utils/auth";
 import { Toaster } from "./components/ui/toaster";
+import Profile from "./pages/Profile";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,7 +21,7 @@ function App() {
     },
     {
       path: ROUTES.me,
-      element: <h1>Me uhul</h1>,
+      element: <Profile />,
       loader: () => checkAuth(),
     },
     {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useToast } from "../../../components/ui/use-toast";
 // import { useNavigate } from "react-router";
@@ -27,7 +27,7 @@ const AddNewPost = () => {
   const [fileSelected, setFileSelected] = useState("");
 
   //   const navigate = useNavigate();
-
+const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const { mutate, isPending } = useMutation({
@@ -42,7 +42,7 @@ const AddNewPost = () => {
       });
 
       //   navigate(ROUTES.posts);
-      alert("aqui invalida a listagem para aparecer o novo post no topo");
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
     },
     onError: (error) => {
       console.error(error);
@@ -53,7 +53,7 @@ const AddNewPost = () => {
         variant: "destructive",
       });
 
-      alert("aqui reseta o fomr");
+      alert("aqui reseta o form");
     },
   });
 
@@ -86,8 +86,8 @@ const AddNewPost = () => {
       onSubmit={handleSubmit}
     >
       {({ values }) => (
-        <Form className="flex flex-col m-20 gap-3">
-          <h1 className="text-xl font-bold text-center mb-16">
+        <Form className="flex flex-col m-5 md:m-12 lg:m-20 gap-3">
+          <h1 className="text-xl font-bold text-center mb-8">
             Que tal compartilhar algo com seus amigos?
           </h1>
           <label htmlFor="title">Title:</label>

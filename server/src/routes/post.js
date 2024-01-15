@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const {handleGetPostList} = require("../controllers/post");
 
 const router = express.Router();
 
@@ -36,6 +37,11 @@ router.post("/create", upload.single("image"), (req, res) => {
   });
 
   handleCreatePost(req, res);
+});
+
+router.get("/list", (req, res) => {
+  
+  handleGetPostList(req, res);
 });
 
 module.exports = router;

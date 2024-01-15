@@ -5,7 +5,7 @@ import { CircleUser } from "lucide-react";
 
 function NavBar() {
   return (
-    <nav className="flex flex-row  justify-between bg-indigo-400">
+    <nav className="flex flex-row  justify-between p-10 bg-white border-b-2 border-border shadow-lg">
       <div className="">
         <Link to={ROUTES.home}>
           <img src="/logos/logo-quikdev.png" className="w-10 h-10" alt="logo" />
@@ -15,7 +15,9 @@ function NavBar() {
         <span className="text-xl font-bold">Social Media QuikDev</span>
       </div>
       <div className="">
-        <CircleUser />
+      <Link to={ROUTES.me}>
+        <CircleUser size={30} />
+        </Link>
       </div>
     </nav>
   );
