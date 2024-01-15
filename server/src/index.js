@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 
 const userRouter = require("./routes/user");
+const authRouter = require("./routes/auth");
+
 
 const app = express();
 
@@ -12,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //ROUTES
 app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
 //DB INSTANCE
 const db = require("./services/database/sqlite");

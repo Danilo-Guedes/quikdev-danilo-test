@@ -1,10 +1,13 @@
 import apiClient from ".";
 
 export async function createUser(user) {
+  try {
+    const resp = await apiClient.post("/user/create", user);
 
-    const resp = await apiClient.post('/user/create', user);
+    console.log({ resp });
 
-    console.log({resp});
-
-    return resp.data
+    return resp.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
