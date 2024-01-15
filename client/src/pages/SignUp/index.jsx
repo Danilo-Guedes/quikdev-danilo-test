@@ -133,7 +133,7 @@ function SignUp() {
                   </div>
                   <button
                     onClick={handleSingUp}
-                    className="bg-red-500 text-white rounded-lg p-2 mt-5"
+                    className="bg-red-500 text-white rounded-lg p-2 mt-5 font-bold text-lg"
                   >
                     Cadastrar
                   </button>
