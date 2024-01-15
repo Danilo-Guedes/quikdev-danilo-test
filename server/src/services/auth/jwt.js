@@ -20,4 +20,20 @@ async function createUserJWT(user) {
   return token;
 }
 
-module.exports = { createUserJWT };
+async function decodeJWT(token) {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'AnRandomSaltText');
+    return decoded;
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      // Handle token expiration error
+      console.log('Token has expired');
+    } else {
+      // Handle other JWT verification errors
+      console.log('Invalid token');
+    }
+    return null;
+  }
+}
+
+module.exports = { createUserJWT, decodeJWT };

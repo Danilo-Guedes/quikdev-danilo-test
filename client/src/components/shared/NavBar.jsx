@@ -5,7 +5,7 @@ import { CircleUser } from "lucide-react";
 
 function NavBar() {
   return (
-    <nav className="flex flex-row  justify-between">
+    <nav className="flex flex-row  justify-between bg-indigo-400">
       <div className="">
         <Link to={ROUTES.home}>
           <img src="/logos/logo-quikdev.png" className="w-10 h-10" alt="logo" />

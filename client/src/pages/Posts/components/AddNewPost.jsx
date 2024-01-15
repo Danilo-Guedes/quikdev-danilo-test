@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import Spinner from "../../../components/shared/Spinner";
 import { useMutation } from "@tanstack/react-query";
-import { createPost } from "../../../api/post";
+
 import { useToast } from "../../../components/ui/use-toast";
 // import { useNavigate } from "react-router";
 import { cn } from "../../../utils/style";
+import { Input } from "../../../components/ui/input";
+import { createPost } from "../../../api/post";
 // import { ROUTES } from "../../../utils/routes";
 import { XCircleIcon } from "lucide-react";
+import { Textarea } from "../../../components/ui/textarea";
+import Spinner from "../../../components/shared/Spinner";
+
 const AddNewPost = () => {
   const initialValues = {
     title: "",
@@ -16,8 +20,8 @@ const AddNewPost = () => {
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required("Title is required"),
-    description: Yup.string().required("Description is required"),
+    title: Yup.string().required("Obrigatório"),
+    description: Yup.string().required("Obrigatório"),
   });
 
   const [fileSelected, setFileSelected] = useState("");
@@ -30,27 +34,22 @@ const AddNewPost = () => {
     mutationFn: createPost,
     onSuccess: (data) => {
       console.log("data: ", data);
-      // On success, you can do anything with the returned data
-      console.log("User loged in successfully");
+      console.log("Post created successfully");
 
-      localStorage.setItem("user-token", data.token);
-      localStorage.setItem("user-data", JSON.stringify(data.user));
       toast({
-        title: "Usuário Logado",
-        description: `Bem vindo ao Teste QuikDev, ${data.user.name}`,
+        title: "Sucesso!",
+        description: `Post criado com sucesso, compartilhe com seus amigos`,
       });
 
       //   navigate(ROUTES.posts);
       alert("aqui invalida a listagem para aparecer o novo post no topo");
     },
     onError: (error) => {
-      // On error, you can do anything with the error object
-      console.log("Error when tried to login the user");
       console.error(error);
 
       toast({
         title: "Opss...",
-        description: "Erro ao tentar logar, verifique os dados informados",
+        description: "Erro ao tentar criar uma postagem, tente mais tarde.",
         variant: "destructive",
       });
 
@@ -60,8 +59,15 @@ const AddNewPost = () => {
 
   const handleSubmit = (values) => {
     // Handle form submission logic here
-    console.log(values);
-    mutate(values);
+    console.log({ valuesNoAddNewPost: values });
+
+    const formData = new FormData();
+
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("image", fileSelected);
+
+    mutate(formData);
   };
 
   const handleSelectFile = (event) => {
@@ -69,9 +75,9 @@ const AddNewPost = () => {
     setFileSelected(file);
   };
 
-  useEffect(() => {
-    console.log({ fileSelected });
-  }, [fileSelected]);
+  // useEffect(() => {
+  //   console.log({ fileSelected });
+  // }, [fileSelected]);
 
   return (
     <Formik
@@ -80,28 +86,53 @@ const AddNewPost = () => {
       onSubmit={handleSubmit}
     >
       {({ values }) => (
-        <Form className="flex flex-col m-20">
+        <Form className="flex flex-col m-20 gap-3">
           <h1 className="text-xl font-bold text-center mb-16">
             Que tal compartilhar algo com seus amigos?
           </h1>
           <label htmlFor="title">Title:</label>
-          <Field type="text" id="title" name="title" />
-          <ErrorMessage name="title" component="div" />
+          <Field
+            type="text"
+            id="title"
+            name="title"
+            className="border border-gray-600"
+            as={Input}
+          />
+          <ErrorMessage
+            name="title"
+            component="div"
+            className="text-red-500 text-base font-semibold"
+          />
 
           <label htmlFor="description">Description:</label>
-          <Field as="textarea" id="description" name="description" />
-          <ErrorMessage name="description" component="div" />
+          <Field
+            id="description"
+            name="description"
+            className="border border-gray-600"
+            as={Textarea}
+          />
+          <ErrorMessage
+            name="description"
+            component="div"
+            className="text-red-500 text-base font-semibold"
+          />
 
-          <label htmlFor="image">Image:</label>
+          <label
+            htmlFor="image"
+            className="group underline mt-5 hover:cursor-pointer w-fit py-5 pr-5"
+          >
+            Adicione uma imagem
+          </label>
           <Field
             type="file"
             id="image"
             name="image"
             onChange={handleSelectFile}
+            className="hidden"
           />
 
           {fileSelected && (
-            <div className="relative flex items-center justify-center">
+            <div className="relative flex items-center justify-center my-20">
               <img
                 src={URL.createObjectURL(fileSelected)}
                 alt="Preview"
@@ -121,7 +152,7 @@ const AddNewPost = () => {
               isPending && "cursor-not-allowed opacity-60"
             )}
           >
-            {isPending ? <Spinner /> : "C riar um Post"}
+            {isPending ? <Spinner /> : "Criar um Post"}
           </button>
 
           <pre>{JSON.stringify(values)}</pre>

@@ -2,7 +2,7 @@ import apiClient from ".";
 
 export async function fetchPosts() {
   try {
-    const resp = await apiClient.get("/api/posts");
+    const resp = await apiClient.get("/posts/create");
 
     console.log({ resp });
 
@@ -13,8 +13,9 @@ export async function fetchPosts() {
   }
 }
 export async function createPost(data) {
+    console.log("data na api", data);
   try {
-    const resp = await apiClient.post("/api/posts", data);
+    const resp = await apiClient.post("/posts/create", data);
 
     console.log({ resp });
 

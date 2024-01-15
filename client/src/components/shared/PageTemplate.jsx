@@ -4,9 +4,9 @@ import Footer from './Footer';
 
 const PageTemplate = ({ children }) => {
     return (
-        <div className="h-full flex flex-col bg-cyan-300">
+        <div className="h-full flex flex-col">
             <NavBar />
-            <div className="flex h-screen flex-col bg-lime-300">{children}</div>
+            <div className="flex h-screen flex-col">{children}</div>
             <Footer />
         </div>
     );

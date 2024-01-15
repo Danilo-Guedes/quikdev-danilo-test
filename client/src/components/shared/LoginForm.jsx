@@ -18,7 +18,6 @@ function LoginForm() {
     validationSchema: Yup.object({
       email: Yup.string().email("E-mail inválido").required("Obrigatório"),
       password: Yup.string()
-        .max(20, "Must be 20 characters or less")
         .required("Obrigatório"),
     }),
     onSubmit: (values) => {

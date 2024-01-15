@@ -3,7 +3,7 @@ import AddNewPost from "./components/AddNewPost";
 function Posts() {
   return (
     <PageTemplate>
-      <div className="flex flex-col container self-center border border-border rounded-lg my-20 bg-cyan-600">
+      <div className="max-w-[900px] flex flex-col container self-center border border-border rounded-lg my-20">
         <AddNewPost />
       </div>
       <span>aqui vai o componente de listagem</span>
