@@ -27,7 +27,7 @@ const AddNewPost = () => {
   const [fileSelected, setFileSelected] = useState("");
 
   //   const navigate = useNavigate();
-const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const { mutate, isPending } = useMutation({
@@ -42,7 +42,7 @@ const queryClient = useQueryClient();
       });
 
       //   navigate(ROUTES.posts);
-      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (error) => {
       console.error(error);
@@ -85,12 +85,12 @@ const queryClient = useQueryClient();
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ values }) => (
-        <Form className="flex flex-col m-5 md:m-12 lg:m-20 gap-3">
+      {() => (
+        <Form className="flex flex-col m-5 md:m-12 lg:m-16 gap-3">
           <h1 className="text-xl font-bold text-center mb-8">
             Que tal compartilhar algo com seus amigos?
           </h1>
-          <label htmlFor="title">Title:</label>
+          <label htmlFor="title">Título:</label>
           <Field
             type="text"
             id="title"
@@ -104,7 +104,7 @@ const queryClient = useQueryClient();
             className="text-red-500 text-base font-semibold"
           />
 
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="description">Descriçao:</label>
           <Field
             id="description"
             name="description"
@@ -148,14 +148,12 @@ const queryClient = useQueryClient();
             disabled={isPending}
             type="submit"
             className={cn(
-              "bg-red-500 text-white rounded-lg p-2 mt-5 flex items-center justify-center font-bold text-lg",
+              "bg-red-500 text-white rounded-lg p-2 mt-3 flex items-center justify-center font-bold text-lg",
               isPending && "cursor-not-allowed opacity-60"
             )}
           >
             {isPending ? <Spinner /> : "Criar um Post"}
           </button>
-
-          <pre>{JSON.stringify(values)}</pre>
         </Form>
       )}
     </Formik>

@@ -1,7 +1,7 @@
 // Create the Comment table fn
 
 const createTable = (db) => {
-    const createTableQuery = `
+  const createTableQuery = `
         CREATE TABLE IF NOT EXISTS Comment (
             id INTEGER PRIMARY KEY,
             user_id INTEGER,
@@ -12,13 +12,33 @@ const createTable = (db) => {
         );
     `;
 
-    db.run(createTableQuery, (err) => {
-        if (err) {
-            console.error("Error creating posts table:", err.message);
-        } else {
-            console.log("Posts table created successfully.");
-        }
-    });
+  db.run(createTableQuery, (err) => {
+    if (err) {
+      console.error("Error creating posts table:", err.message);
+    } else {
+      console.log("Posts table created successfully.");
+    }
+  });
 };
 
-module.exports = { createTable };
+const insertCommentIntoDb = (db, { userId, postId, description }) => {
+  console.log(" userId, postId, description: ", userId, postId, description);
+
+  const insertQuery = `
+        INSERT INTO Comment (user_id, post_id, description)
+        VALUES (?, ?, ?);
+    `;
+
+  return new Promise((resolve, reject) => {
+    db.run(insertQuery, [userId, postId, description], function (err) {
+      if (err) {
+        console.error("Error inserting comment into db:", err.message);
+        reject(err);
+      } else {
+        resolve("Comment inserted successfully.");
+      }
+    });
+  });
+};
+
+module.exports = { createTable, insertCommentIntoDb };

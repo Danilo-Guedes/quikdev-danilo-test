@@ -8,11 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
+import AddNewComment from "./AddNewComment";
 
 function PostCard({ post }) {
   return (
-    <Card key={post.id} className="max-w-[600px] flex flex-col  flex-grow-0">
+    <Card
+      key={post.id}
+      className="max-w-[600px] flex flex-col p-10 shadow-2xl "
+    >
       <CardHeader className="">
+        <div className="flex flex-row gap-5 mb-5">
+          <User2Icon />
+          <span>{post.user.name}</span>
+        </div>
         <img
           src={`http://localhost:3000/${post.file_path}`}
           alt="Post Image"
@@ -28,10 +36,8 @@ function PostCard({ post }) {
         </CardDescription>
       </CardContent>
       <CardFooter>
-        <div className="flex flex-row gap-5">
-          <User2Icon />
-          <span>{post.user.name}</span>
-        </div>
+        {/* <Comments comments={post.comments} /> */}
+        <AddNewComment postId={post.id} />
       </CardFooter>
     </Card>
   );
