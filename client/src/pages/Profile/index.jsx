@@ -1,29 +1,21 @@
-import { useState } from "react";
 import PageTemplate from "@/src/components/shared/PageTemplate";
 import { Card } from "@/src/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { getUserById } from "../../api/user";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+
+import { logout } from "../../utils/auth";
+import { ROUTES } from "../../utils/routes";
+import { useNavigate } from "react-router";
 
 function ProfilePage() {
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: user } = useQuery({
     queryKey: ["get-user-profile"],
     queryFn: getUserById,
   });
 
-  const [name, setName] = useState("");
-  const [userImage, setUserImage] = useState("");
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleImageChange = (e) => {
-    setUserImage(e.target.value);
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,28 +25,35 @@ function ProfilePage() {
   return (
     <PageTemplate>
       <div className="flex flex-col items-center  h-screen ">
-        <Card className="h-96 mt-20 w-1/2">
-          <h1>User Profile</h1>
-          <form onSubmit={handleSubmit} className="flex flex-col">
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={handleNameChange}
-            />
+        <Card className="mt-10 w-1/2 p-10 ">
+          <div className="h-20 w-20 rounded-full border flex items-center justify-center bg-gray-600 mb-10">
+            <span className="text-center text-white font-semibold">
+              User Profile
+            </span>
+          </div>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <label htmlFor="name">Nome</label>
+            <Input type="text" id="name" readOnly value={user?.name} />
 
-            <label htmlFor="userImage">User Image:</label>
-            <input
-              type="text"
-              id="userImage"
-              value={userImage}
-              onChange={handleImageChange}
-            />
+            <label htmlFor="email">E-mail</label>
+            <Input type="text" id="email" value={user?.email} readOnly />
 
-            <button type="submit">Save</button>
+            <Button className="mt-10 hover:cursor-not-allowed" type="submit">
+              Save
+            </Button>
           </form>
         </Card>
+
+        <Button
+          onClick={() => {
+            logout();
+            navigate(ROUTES.home)
+          }}
+          className="mt-10"
+          variant="link"
+        >
+          Logout
+        </Button>
       </div>
     </PageTemplate>
   );

@@ -22,7 +22,6 @@ const createTable = (db) => {
 };
 
 const insertCommentIntoDb = (db, { userId, postId, description }) => {
-  console.log(" userId, postId, description: ", userId, postId, description);
 
   const insertQuery = `
         INSERT INTO Comment (user_id, post_id, description)

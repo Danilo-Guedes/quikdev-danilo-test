@@ -1,5 +1,5 @@
 const db = require("../services/database/sqlite");
-const { insertPostIntoDb, getPostRows } = require("../models/post");
+const { insertPostIntoDb, getPostsWithComments } = require("../models/post");
 const { decodeJWT } = require("../services/auth/jwt");
 const { insertCommentIntoDb } = require("../models/comment");
 
@@ -22,7 +22,7 @@ async function handleCreatePost(req, res) {
 
 async function handleGetPostList(req, res) {
   try {
-    const PostList = await getPostRows(db);
+    const PostList = await getPostsWithComments(db);
 
     res.status(200).json(PostList);
   } catch (error) {
@@ -35,7 +35,6 @@ async function handleAddComment(req, res) {
     const { postId } = req.params;
     const { comment: description, user } = req.body;
 
-    console.log({ postId, description, userId: user.id });
 
     const data = {
       postId,
@@ -49,9 +48,9 @@ async function handleAddComment(req, res) {
       res
         .status(200)
         .json({ error: false, message: "Comment added successfully" });
+    } else {
+      res.status(500).json({ error: true, message: "Error adding comment" });
     }
-
-    res.send("Comment added successfully");
   } catch (error) {
     console.error(error);
   }

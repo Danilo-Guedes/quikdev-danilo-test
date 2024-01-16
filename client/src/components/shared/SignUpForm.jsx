@@ -25,9 +25,12 @@ function SignUpForm() {
   const { toast } = useToast();
   const { mutate, isPending } = useMutation({
     mutationFn: createUser,
-    onSuccess: (data) => {
-      console.log("User created successfully");
-      console.log("data: ", data);
+    onSuccess: () => {
+
+      toast({
+        title: "Sucesso!",
+        description: `Usuário criado com sucesso!!`,
+      });
       navigate(ROUTES.home);
     },
     onError: (error) => {

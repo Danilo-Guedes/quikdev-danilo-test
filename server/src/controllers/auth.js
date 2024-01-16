@@ -1,5 +1,5 @@
 const db = require("../services/database/sqlite");
-const { getUserRow } = require("../models/user");
+const { getUserRowByEmail } = require("../models/user");
 const bcrypt = require("bcrypt");
 const { createUserJWT } = require("../services/auth/jwt");
 
@@ -13,9 +13,7 @@ async function handleUserLogin(req, res) {
   }
 
   try {
-    const row = await getUserRow(db, req.body);
-
-    console.log({ row });
+    const row = await getUserRowByEmail(db, req.body);
 
     if (!row) {
       return res.status(400).json({ error: true, message: "User not found" });

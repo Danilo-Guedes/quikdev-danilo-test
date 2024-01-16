@@ -10,7 +10,6 @@ function Home() {
 
   useEffect(() => {
     const hasUserData = checkAuth();
-    console.log({ user: hasUserData });
     if (hasUserData) {
       navigate(ROUTES.posts);
     }

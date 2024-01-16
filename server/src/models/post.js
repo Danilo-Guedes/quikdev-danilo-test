@@ -42,23 +42,61 @@ const insertPostIntoDb = (db, values) => {
   });
 };
 
-const getPostRows = async (db) => {
+// const getPostRows = async (db) => {
+//   const getPostQuery = `
+//   SELECT Post.*, User.name, User.email
+//   FROM Post
+//   INNER JOIN User ON Post.user_id = User.id
+//   ORDER BY Post.id DESC;
+// `;
+
+//   return new Promise((resolve, reject) => {
+//     db.all(getPostQuery, (err, rows) => {
+//       if (err) {
+//         console.error("Error getting posts listing:", err.message);
+//         reject(err);
+//       } else {
+//         console.log("Posts retrieved successfully.");
+
+//         const posts = rows.map((row) => {
+//           const user = {
+//             name: row.name,
+//             email: row.email,
+//           };
+
+//           delete row.name;
+//           delete row.email;
+
+//           return {
+//             ...row,
+//             user,
+//           };
+//         });
+
+//         resolve(posts);
+//       }
+//     });
+//   });
+// };
+
+const getPostsWithComments = async (db) => {
   const getPostQuery = `
-  SELECT Post.*, User.name, User.email
-  FROM Post
-  INNER JOIN User ON Post.user_id = User.id
-  ORDER BY Post.id DESC;
-`;
+    SELECT Post.*, User.name, User.email, Comment.description as comment
+    FROM Post
+    INNER JOIN User ON Post.user_id = User.id
+    LEFT JOIN Comment ON Comment.post_id = Post.id
+    ORDER BY Post.id DESC;
+  `;
 
   return new Promise((resolve, reject) => {
     db.all(getPostQuery, (err, rows) => {
       if (err) {
-        console.error("Error getting posts listing:", err.message);
+        console.error("Error getting posts with comments:", err.message);
         reject(err);
       } else {
-        console.log("Posts retrieved successfully.");
 
-        const posts = rows.map((row) => {
+        const posts = rows.reduce((acc, row) => {
+
           const user = {
             name: row.name,
             email: row.email,
@@ -67,11 +105,20 @@ const getPostRows = async (db) => {
           delete row.name;
           delete row.email;
 
-          return {
-            ...row,
-            user,
-          };
-        });
+          const post = acc.find((p) => p.id === row.id);
+
+          if (post) {
+            post.comments.push(row.comment);
+          } else {
+            acc.push({
+              ...row,
+              user,
+              comments: row.comment ? [row.comment] : [],
+            });
+          }
+
+          return acc;
+        }, []);
 
         resolve(posts);
       }
@@ -79,4 +126,4 @@ const getPostRows = async (db) => {
   });
 };
 
-module.exports = { createTable, insertPostIntoDb, getPostRows };
+module.exports = { createTable, insertPostIntoDb, getPostsWithComments };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -14,6 +14,8 @@ import { Textarea } from "../../../components/ui/textarea";
 import Spinner from "../../../components/shared/Spinner";
 
 const AddNewPost = () => {
+  const formRef = useRef(null);
+
   const initialValues = {
     title: "",
     description: "",
@@ -25,6 +27,11 @@ const AddNewPost = () => {
   });
 
   const [fileSelected, setFileSelected] = useState("");
+
+  const resetAllForm = () => {
+    formRef.current.resetForm();
+    setFileSelected("");
+  };
 
   //   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -41,6 +48,8 @@ const AddNewPost = () => {
         description: `Post criado com sucesso, compartilhe com seus amigos`,
       });
 
+      resetAllForm();
+
       //   navigate(ROUTES.posts);
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
@@ -52,8 +61,7 @@ const AddNewPost = () => {
         description: "Erro ao tentar criar uma postagem, tente mais tarde.",
         variant: "destructive",
       });
-
-      alert("aqui reseta o form");
+      resetAllForm();
     },
   });
 
@@ -84,6 +92,7 @@ const AddNewPost = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      innerRef={formRef}
     >
       {() => (
         <Form className="flex flex-col m-5 md:m-12 lg:m-16 gap-3">

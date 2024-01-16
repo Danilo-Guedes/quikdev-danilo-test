@@ -5,10 +5,8 @@ import { jwtDecode } from "jwt-decode"; // Add this import statement
 
 export  function checkAuth() {
   const userToken = localStorage.getItem("user-token");
-  console.log('userToken no checkAuth: ', userToken);
 
   if (!userToken) {
-    // console.log("viu que não tem userToken");
     return redirect(ROUTES.home);
   }
 
@@ -26,7 +24,12 @@ export  function checkAuth() {
   const userData = localStorage.getItem("user-data");
 
   const data = { userData, token: userToken };
-  console.log("data no checkAuth: ", data);
 
   return data;
+}
+
+export function logout() {
+  localStorage.removeItem("user-token");
+  localStorage.removeItem("user-data");
+
 }

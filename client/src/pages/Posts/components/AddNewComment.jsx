@@ -64,7 +64,7 @@ function AddNewComment({postId}) {
 
   return (
     <div className="flex flex-col w-full">
-      <label htmlFor="comment">Adicione um comentário:</label>
+      <label htmlFor="comment" className="text-lg">Adicione um comentário:</label>
       <Textarea id="comment" value={comment} onChange={handleCommentChange} />
       <div className="flex flex-row justify-around mt-5">
         <Button variant="ghost" onClick={handleCancel}>Cancel</Button>
