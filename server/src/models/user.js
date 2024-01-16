@@ -57,7 +57,6 @@ const getUserRowByEmail = (db, user) => {
 };
 
 const getUserRowById = (db, user) => {
-  console.log({ userNoModels: user });
   const getUserRowQuery = `
     SELECT * FROM User WHERE id = ?
   `;

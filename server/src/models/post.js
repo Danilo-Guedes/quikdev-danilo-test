@@ -42,43 +42,6 @@ const insertPostIntoDb = (db, values) => {
   });
 };
 
-// const getPostRows = async (db) => {
-//   const getPostQuery = `
-//   SELECT Post.*, User.name, User.email
-//   FROM Post
-//   INNER JOIN User ON Post.user_id = User.id
-//   ORDER BY Post.id DESC;
-// `;
-
-//   return new Promise((resolve, reject) => {
-//     db.all(getPostQuery, (err, rows) => {
-//       if (err) {
-//         console.error("Error getting posts listing:", err.message);
-//         reject(err);
-//       } else {
-//         console.log("Posts retrieved successfully.");
-
-//         const posts = rows.map((row) => {
-//           const user = {
-//             name: row.name,
-//             email: row.email,
-//           };
-
-//           delete row.name;
-//           delete row.email;
-
-//           return {
-//             ...row,
-//             user,
-//           };
-//         });
-
-//         resolve(posts);
-//       }
-//     });
-//   });
-// };
-
 const getPostsWithComments = async (db) => {
   const getPostQuery = `
     SELECT Post.*, User.name, User.email, Comment.description as comment

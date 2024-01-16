@@ -154,11 +154,11 @@ const AddNewPost = () => {
           )}
 
           <button
-            disabled={isPending}
+            disabled={isPending || !fileSelected}
             type="submit"
             className={cn(
               "bg-red-500 text-white rounded-lg p-2 mt-3 flex items-center justify-center font-bold text-lg",
-              isPending && "cursor-not-allowed opacity-60"
+              (isPending || !fileSelected) && "cursor-not-allowed opacity-60"
             )}
           >
             {isPending ? <Spinner /> : "Criar um Post"}
