@@ -24,22 +24,27 @@ To get started with this project, follow the steps below:
 git clone https://github.com/Danilo-Guedes/quikdev-danilo-test.git
 ```
 
-2. Make the run.sh executable by doing...
+2. cd into the project folder
+
+```bash
+cd quikdev-danilo-test
+```
+
+3. Make the run.sh executable by doing...
 
 ```bash
 chmod +x run.sh
-
 ```
 
-3. Run the script.
+4. Run the script.
 
 ```bash
 ./run.sh
 ```
 
-4. Open the browser at http://localhost:5173/ (default port for vite apps).
+5. Open the browser at http://localhost:5173/ (default port for vite apps).
 
-5. Start use the application.
+6. Start use the application.
 
 ## What I would do if I had more time ?
 
@@ -48,7 +53,7 @@ chmod +x run.sh
 3. Change the fake_bucket to a real implementation of cloud file storage.
 4. Create a class to standardize backend errors.
 5. If it were a real project, I would be using TypeScript instead of vanilla JavaScript.
-6. I would put all the code into a container so the development enviroment get easier to setup.
+6. I would put all the code into a container so the development enviroment gets easier to setup.
 
 ## License
 
