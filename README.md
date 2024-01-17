@@ -1,16 +1,29 @@
 # quikdev-danilo-test
 
-this is a test for fullstack developer in Quikdev made in a weekend
+This is a test for fullstack developer in Quikdev made in a weekend, and with more time I will refactor and add more features (probably).
 
-This is a fullstack application built with Vite + React in the front-end and Node.js + Express in the back-end.
+This is a fullstack application built with Vite + React in the front-end and Node.js + Express in the back-end. It' is a simulation for a social media app, with full authentication, user creation, post creation, add comments and so on...
 
 ## Front-end
 
-The front-end of this application is developed using Vite and React. Vite is a fast build tool for modern web development, and React is a popular JavaScript library for building user interfaces.
+The front-end of this application is developed using:
+
+- Vite: a fast build tool for modern web development.
+- React: a popular JavaScript library for building user interfaces.
+- Formik: a library for building forms with React.
+- Yup: a schema validation library.
+- Tailwind CSS: a utility-first CSS framework.
+- React Query: a library for fetching and managing data in React applications.
 
 ## Back-end
 
-The back-end of this application is developed using Node.js and Express. Node.js is a JavaScript runtime that allows us to run JavaScript on the server-side, and Express is a fast and minimalist web application framework for Node.js.
+The back-end of this application is developed using:
+
+- Node.js: a JavaScript runtime for server-side development.
+- Express: a fast and minimalist web application framework for Node.js.
+- Multer: a middleware for handling file uploads in Node.js.
+- Passport: an authentication middleware for Node.js.
+- SQLite3: a lightweight and embedded database for Node.js.
 
 ## Getting Started
 
@@ -54,6 +67,15 @@ chmod +x run.sh
 4. Create a class to standardize backend errors.
 5. If it were a real project, I would be using TypeScript instead of vanilla JavaScript.
 6. I would put all the code into a container so the development enviroment gets easier to setup.
+
+## Screenshots
+
+<img src="screenshots/sign-up-desktop.png" alt="Sign up with form validation" width="100%">
+<img src="screenshots/empty-list.png" alt="Svg for empty Posts Listing" width="100%">
+<img src="screenshots/new-post.png" alt="Add a new post" width="49%">
+<img src="screenshots/profile.png" alt="Profile page" width="49%">
+<img src="screenshots/print_login.png" alt="Login with credentials"  width="20%" height="600px">
+<img src="screenshots/post-with-comments.png" alt="Post with comments" width="20%" height="600px">
 
 ## License
 
