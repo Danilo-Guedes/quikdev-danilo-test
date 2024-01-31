@@ -27,7 +27,7 @@ The back-end of this application is developed using:
 
 ## Getting Started
 
-> :warning: **WARNING**: This monorepo requires Node.js v18+. Please ensure you have this version installed before proceeding.
+> :warning: **WARNING **: This monorepo requires Docker and Docker Compose  installed before proceeding.
 
 To get started with this project, follow the steps below:
 
@@ -43,21 +43,14 @@ git clone https://github.com/Danilo-Guedes/quikdev-danilo-test.git
 cd quikdev-danilo-test
 ```
 
-3. Make the run.sh executable by doing...
+3. run the docker compose to initiate the application.
 
 ```bash
-chmod +x run.sh
+docker-compose up --build
 ```
 
-4. Run the script.
+4. Open the browser at http://localhost:5173/ (default port for vite apps) and use the application.
 
-```bash
-./run.sh
-```
-
-5. Open the browser at http://localhost:5173/ (default port for vite apps).
-
-6. Start use the application.
 
 ## What I would do if I had more time ?
 
@@ -66,7 +59,6 @@ chmod +x run.sh
 3. Change the fake_bucket to a real implementation of cloud file storage.
 4. Create a class to standardize backend errors.
 5. If it were a real project, I would be using TypeScript instead of vanilla JavaScript.
-6. I would put all the code into a container so the development enviroment gets easier to setup.
 
 ## Screenshots
 
